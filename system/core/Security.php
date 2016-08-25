@@ -678,12 +678,7 @@ class CI_Security {
 			{
 				if ( ! isset($_entities))
 				{
-					$_entities = array_map(
-						'strtolower',
-						is_php('5.3.4')
-							? get_html_translation_table(HTML_ENTITIES, $flag, $charset)
-							: get_html_translation_table(HTML_ENTITIES, $flag)
-					);
+					$_entities = array_map('strtolower', get_html_translation_table(HTML_ENTITIES, $flag, $charset));
 
 					// If we're not on PHP 5.4+, add the possibly dangerous HTML 5
 					// entities to the array manually
@@ -762,7 +757,14 @@ class CI_Security {
 	 */
 	public function strip_image_tags($str)
 	{
-		return preg_replace(array('#<img[\s/]+.*?src\s*=\s*["\'](.+?)["\'].*?\>#', '#<img[\s/]+.*?src\s*=\s*(.+?).*?\>#'), '\\1', $str);
+		return preg_replace(
+			array(
+				'#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
+				'#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i'
+			),
+			'\\2',
+			$str
+		);
 	}
 
 	// ----------------------------------------------------------------

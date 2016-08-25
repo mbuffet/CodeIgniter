@@ -108,6 +108,16 @@ This article is intended to be a reference for them.
 		for use when you don't need to get a result object or to
 		just send a query to the database and not care for the result.
 
+	.. php:method:: affected_rows()
+
+		:returns:	Number of rows affected
+		:rtype:	int
+
+		Returns the number of rows *changed* by the last executed query.
+
+		Useful for checking how much rows were created, updated or deleted
+		during the last executed query.
+
 	.. php:method:: trans_strict([$mode = TRUE])
 
 		:param	bool	$mode: Strict mode flag
@@ -225,6 +235,13 @@ This article is intended to be a reference for them.
 		Similar to ``escape_str()``, but will also escape the ``%``
 		and ``_`` wildcard characters, so that they don't cause
 		false-positives in LIKE conditions.
+
+		.. important:: The ``escape_like_str()`` method uses '!' (exclamation mark)
+			to escape special characters for *LIKE* conditions. Because this
+			method escapes partial strings that you would wrap in quotes
+			yourself, it cannot automatically add the ``ESCAPE '!'``
+			condition for you, and so you'll have to manually do that.
+
 
 	.. php:method:: primary($table)
 

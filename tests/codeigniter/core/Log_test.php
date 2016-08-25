@@ -1,5 +1,4 @@
 <?php
-
 class Log_test extends CI_TestCase {
 
 	public function test_configuration()
